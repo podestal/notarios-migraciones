@@ -20,7 +20,7 @@ export interface Viaje {
     id_viaje: number
     num_kardex: string
     asunto: string
-    fecha_ingreso: string
+    fec_ingreso: string
     referencia: string
     num_formu: string
     lugar_formu: string
@@ -39,41 +39,6 @@ interface Props {
 const ViajeMain = ({ viaje }: Props) => {
 
   return (
-    // <>
-
-    // {viaje && (
-    //    <>
-    //     <div
-    //         className="grid grid-cols-7 gap-4 p-2 my-4 mx-6 text-xs"
-    //       >
-    //         <p 
-    //             // onClick={() => setOpen(true)}
-    //             className="text-center text-blue-600 cursor-pointer hover:text-blue-500">{viaje.num_formu}</p>
-    //         <p className="text-center">{viaje.num_kardex}</p>
-    //         <div className="col-span-2 text-center">
-    //             {viaje.contratantes.map((contratante) => (
-    //                 <div 
-    //                     className="grid grid-cols-6 gap-10 items-start justify-start text-left"
-    //                     key={contratante.id_contratante}>
-    //                     <p className="font-semibold">{PERMISO_VIAJE_CONDICIONES.find(condicion => condicion.id_condicion === contratante.c_condicontrat)?.des_condicion}:</p>
-    //                     <p className="col-span-5">{contratante.c_descontrat}</p>
-    //                 </div>
-    //             ))}
-    //         </div>
-    //         <p className="text-center">{viaje.fecha_ingreso}</p>
-    //         <p className="col-span-2 text-center">{viaje.lugar_formu}</p>
-    //       </div>
-    //       <div className="grid grid-cols-9 gap-4 p-2 my-4 mx-6 text-xs">
-    //         <div>Fecha desde: {viaje.fecha_desde}</div>
-    //         <div>Fecha hasta: {viaje.fecha_hasta}</div>
-    //         <div className="col-span-6 text-center flex flex-col gap-2">
-    //             <p className="font-semibold">Observación:</p>
-    //             <p className="text-left">{viaje.observacion}</p>
-    //         </div>
-    //       </div>
-    //     </>
-    // )}
-    // </>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -95,7 +60,7 @@ const ViajeMain = ({ viaje }: Props) => {
           <CalendarDays className="inline mr-1 w-4 h-4" />
           Ingreso:{" "}
           <span className="font-semibold text-gray-800">
-            {viaje.fecha_ingreso}
+            {viaje.fec_ingreso}
           </span>
         </div>
 

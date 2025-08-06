@@ -9,12 +9,14 @@ interface Props {
 const useGetViajes = ({ kardex }: Props): UseQueryResult<Viaje, Error> => {
 
     return useQuery({
-        queryKey: ['viaje'],
+        queryKey: ['viaje', kardex],
         queryFn: async () => {
             const response = await axios.get<Viaje>(`${import.meta.env.VITE_API_URL}permi_viaje/by_kardex/?kardex=${kardex}`);
             return response.data;
+        
         },
         enabled: false,
+        retry: false,
     });
 }
 
