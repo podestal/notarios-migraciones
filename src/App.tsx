@@ -12,7 +12,7 @@ const App = () => {
   const presentYear = new Date().getFullYear()
   const [selectedYear, setSelectedYear] = useState(`${presentYear}`)
   const [page, setPage] = useState(1)
-  const { data: viaje, isLoading, isError, error, refetch } = useGetViajes({ crono: kardex, tipoPermiso: interiorExterior, nombreParticipante: name, page, access, year:2025 })
+  const { data: viajesPage, isLoading, isError, error, refetch } = useGetViajes({ crono: kardex, tipoPermiso: interiorExterior, nombreParticipante: name, page, access, year:2025 })
 
   // if (isSuccess) 
 
@@ -40,8 +40,8 @@ const App = () => {
         return `Error: ${status || error.message}`;
       })()}
     </p>}
-    <>{console.log(viaje)}</>
-    {/* {viaje && <ViajeMain viaje={viaje} />} */}
+    <>{console.log(viajesPage)}</>
+    {viajesPage && <ViajeMain viajes={viajesPage.results} />}
     </>
   )
 }
