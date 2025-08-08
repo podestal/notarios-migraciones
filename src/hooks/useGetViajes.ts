@@ -1,28 +1,32 @@
 import { useQuery, type UseQueryResult } from "@tanstack/react-query"
-import axios from "axios"
-import type { Viaje } from "../components/api/ViajeMain"
+import getPermisoViajeService, { type PermisoViajePage } from "../services/permisoViajeService"
 
 interface Props {
-    kardex: string
-    nombre?: string
+    crono?: string
+    nombreParticipante?: string
+    tipoPermiso?: string
+    page: number
+    access: string
+    year: number
 }
 
-const useGetViajes = ({ kardex, nombre }: Props): UseQueryResult<Viaje, Error> => {
+const useGetViajes = ({ crono, tipoPermiso, nombreParticipante, page, access, year }: Props): UseQueryResult<PermisoViajePage, Error> => {
 
-    let params: {kardex: string, nombreParticipante?: string} = {kardex}
-    if (nombre) {
-        params.nombreParticipante = nombre
-    }
+    const permisoViajeService = getPermisoViajeService()
+    let params: Record<string, string> = {
+        page: page.toString(),
+    };
+
+    console.log(crono)
+    console.log(`${year}000000`)
+
+    if (crono !== `${year}000000` && crono !== undefined) params = { ...params, crono };
+    if (tipoPermiso) params = { ...params, tipoPermiso };
+    if (nombreParticipante) params = { ...params, nombreParticipante };
 
     return useQuery({
-        queryKey: ['viaje', kardex],
-        queryFn: async () => {
-            const response = await axios.get<Viaje>(`${import.meta.env.VITE_API_URL}permi_viaje/by_kardex/`, {params});
-            return response.data;
-        
-        },
-        enabled: false,
-        retry: false,
+        queryKey: ['viaje', page],
+        queryFn: () => permisoViajeService.get(params),
     });
 }
 

@@ -1,19 +1,22 @@
 import { useQueryClient, type QueryObserverResult, type RefetchOptions } from "@tanstack/react-query"
-import type { Viaje } from "../ViajeMain"
 import { useEffect, useState } from "react"
 import { AlertCircle } from "lucide-react"
+import type { PermisoViajePage } from "../../../services/permisoViajeService"
 
 interface Props {
   kardex: string
   setKardex: (kardex: string) => void
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<Viaje, Error>>
+  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<PermisoViajePage, Error>>
   setName: (name: string) => void
   name: string
   setInteriorExterior: (interiorExterior: string) => void
   interiorExterior: string
+  selectedYear: string
+  setSelectedYear: (year: string) => void
+
 }
 
-const ViajeFilters = ({ kardex, setKardex, refetch, setName, name, setInteriorExterior, interiorExterior }: Props) => {
+const ViajeFilters = ({ kardex, setKardex, refetch, setName, name, setInteriorExterior, interiorExterior, selectedYear, setSelectedYear }: Props) => {
 
   const getBaseKardex = (year: string) => `${year}000000`
 
@@ -21,7 +24,6 @@ const ViajeFilters = ({ kardex, setKardex, refetch, setName, name, setInteriorEx
   const [error, setError] = useState<string | null>(null)
   const presentYear = new Date().getFullYear()
   const lastYear = presentYear - 1
-  const [selectedYear, setSelectedYear] = useState(`${presentYear}`)
   const [typedDigits, setTypedDigits] = useState<string>("")
 
   // Initialize once on mount based on current year or existing kardex
