@@ -4,14 +4,20 @@ import type { Viaje } from "../components/api/ViajeMain"
 
 interface Props {
     kardex: string
+    nombre?: string
 }
 
-const useGetViajes = ({ kardex }: Props): UseQueryResult<Viaje, Error> => {
+const useGetViajes = ({ kardex, nombre }: Props): UseQueryResult<Viaje, Error> => {
+
+    let params: {kardex: string, nombre?: string} = {kardex}
+    if (nombre) {
+        params.nombre = nombre
+    }
 
     return useQuery({
         queryKey: ['viaje', kardex],
         queryFn: async () => {
-            const response = await axios.get<Viaje>(`${import.meta.env.VITE_API_URL}permi_viaje/by_kardex/?kardex=${kardex}`);
+            const response = await axios.get<Viaje>(`${import.meta.env.VITE_API_URL}permi_viaje/by_kardex/`, {params});
             return response.data;
         
         },
