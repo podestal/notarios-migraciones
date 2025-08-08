@@ -7,9 +7,13 @@ interface Props {
   kardex: string
   setKardex: (kardex: string) => void
   refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<Viaje, Error>>
+  setName: (name: string) => void
+  name: string
+  setInteriorExterior: (interiorExterior: string) => void
+  interiorExterior: string
 }
 
-const ViajeFilters = ({ kardex, setKardex, refetch }: Props) => {
+const ViajeFilters = ({ kardex, setKardex, refetch, setName, name, setInteriorExterior, interiorExterior }: Props) => {
 
   const getBaseKardex = (year: string) => `${year}000000`
 
@@ -105,29 +109,58 @@ const ViajeFilters = ({ kardex, setKardex, refetch }: Props) => {
   const displayValue = buildKardexFromTyped(selectedYear, typedDigits)
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow border border-gray-200 max-w-xl mx-auto space-y-4">
-      <h2 className="text-lg font-semibold text-gray-800">Filtrar por Kardex</h2>
+    <div className="bg-white p-6 rounded-xl shadow border border-gray-200 w-full max-w-5xl mx-auto space-y-4">
+      {/* Barra de búsqueda por año y kardex */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold text-gray-800">Cronológico:</h2>
+          {/* Year Selector + Kardex */}
+          <div className="flex flex-col sm:flex-row gap-2">
+            <select
+              value={selectedYear}
+              onChange={handleYearChange}
+              className="w-full sm:w-28 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+            >
+              <option value={lastYear}>{lastYear}</option>
+              <option value={presentYear}>{presentYear}</option>
+            </select>
 
-      <div className="flex gap-4 items-center">
-        {/* Year Selector */}
-        <select
-          value={selectedYear}
-          onChange={handleYearChange}
-          className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-        >
-          <option value={lastYear}>{lastYear}</option>
-          <option value={presentYear}>{presentYear}</option>
-        </select>
+            {/* Kardex Input */}
+            <input
+              value={displayValue}
+              onChange={() => { /* no-op: we handle input via keydown/paste */ }}
+              onKeyDown={handleKeyDown}
+              onPaste={handlePaste}
+              placeholder={getBaseKardex(selectedYear)}
+              className="w-full sm:flex-1 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
 
-        {/* Kardex Input */}
-        <input
-          value={displayValue}
-          onChange={() => { /* no-op: we handle input via keydown/paste */ }}
-          onKeyDown={handleKeyDown}
-          onPaste={handlePaste}
-          placeholder={getBaseKardex(selectedYear)}
-          className="flex-1 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        {/* Filter by name */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold text-gray-800">Nombre:</h2>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre de Participante"
+            className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Filter by interior exterior */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold text-gray-800">Tipo:</h2>
+          <select
+            value={interiorExterior}
+            onChange={(e) => setInteriorExterior(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+          >
+            <option value="todos">Todos</option>
+            <option value="interior">Interior</option>
+            <option value="exterior">Exterior</option>
+          </select>
+        </div>
       </div>
 
       {/* Error Message */}
@@ -139,17 +172,19 @@ const ViajeFilters = ({ kardex, setKardex, refetch }: Props) => {
       )}
 
       {/* Search Button */}
-      <button
-        onClick={handleGetViaje}
-        disabled={!!error || !displayValue || displayValue.length !== 10}
-        className={`w-full mt-2 py-2 rounded-md text-white transition-all ${
-          !!error || displayValue.length !== 10
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
-        }`}
-      >
-        Buscar
-      </button>
+      <div className="flex justify-end">
+        <button
+          onClick={handleGetViaje}
+          disabled={!!error || !displayValue || displayValue.length !== 10}
+          className={`w-full sm:w-auto px-4 mt-2 py-2 rounded-md text-white transition-all ${
+            !!error || displayValue.length !== 10
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+          }`}
+        >
+          Buscar
+        </button>
+      </div>
     </div>
   )
 }

@@ -9,9 +9,9 @@ interface Props {
 
 const useGetViajes = ({ kardex, nombre }: Props): UseQueryResult<Viaje, Error> => {
 
-    let params: {kardex: string, nombre?: string} = {kardex}
+    let params: {kardex: string, nombreParticipante?: string} = {kardex}
     if (nombre) {
-        params.nombre = nombre
+        params.nombreParticipante = nombre
     }
 
     return useQuery({
