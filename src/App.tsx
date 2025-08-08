@@ -2,7 +2,8 @@
 import { useState } from "react"
 import ViajeMain from "./components/api/ViajeMain"
 import useGetViajes from "./hooks/useGetViajes"
-import ViajeFilters from "./components/api/participante/ViajeFilters"
+import ViajeFilters from "./components/api/ViajeFilters"
+import ViajePaginator from "./components/api/ViajePaginator"
 
 const App = () => {
   const access = '1234567890'
@@ -41,7 +42,12 @@ const App = () => {
       })()}
     </p>}
     <>{console.log(viajesPage)}</>
-    {viajesPage && <ViajeMain viajes={viajesPage.results} />}
+    {viajesPage && 
+    <div className="flex flex-col gap-4 py-8">
+    <ViajeMain viajes={viajesPage.results} />
+    <ViajePaginator page={page} setPage={setPage} itemsCount={viajesPage.count} itemsPerPage={10} />
+    </div>
+    }
     </>
   )
 }

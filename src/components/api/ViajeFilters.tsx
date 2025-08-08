@@ -1,7 +1,7 @@
 import { useQueryClient, type QueryObserverResult, type RefetchOptions } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { AlertCircle } from "lucide-react"
-import type { PermisoViajePage } from "../../../services/permisoViajeService"
+import type { PermisoViajePage } from "../../services/permisoViajeService"
 
 interface Props {
   kardex: string
