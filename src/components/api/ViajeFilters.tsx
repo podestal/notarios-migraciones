@@ -3,6 +3,12 @@ import { useEffect, useState } from "react"
 import { AlertCircle } from "lucide-react"
 import type { PermisoViajePage } from "../../services/permisoViajeService"
 
+const TIPO_PERMISO = [
+  { value: '0', label: "Todos" },
+  { value: '001', label: "Interior" },
+  { value: '002', label: "Exterior" },
+]
+
 interface Props {
   kardex: string
   setKardex: (kardex: string) => void
@@ -158,9 +164,9 @@ const ViajeFilters = ({ kardex, setKardex, refetch, setName, name, setInteriorEx
             onChange={(e) => setInteriorExterior(e.target.value)}
             className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
           >
-            <option value="todos">Todos</option>
-            <option value="interior">Interior</option>
-            <option value="exterior">Exterior</option>
+            {TIPO_PERMISO.map((tipo) => (
+              <option key={tipo.value} value={tipo.value}>{tipo.label}</option>
+            ))}
           </select>
         </div>
       </div>

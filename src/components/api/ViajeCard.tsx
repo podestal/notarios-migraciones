@@ -28,48 +28,45 @@ const ViajeCard = ({ viaje }: Props) => {
       className="bg-white border border-gray-200 shadow-lg rounded-xl p-6 my-6 mx-4 space-y-4"
     >
       {/* Header (always visible) */}
-      <div className="w-full flex flex-col md:flex-row justify-between items-start gap-4 border-b pb-4">
-        <div>
-          <h2 className="text-lg font-bold mx-auto text-blue-700">
-            Cronológico: {viaje.num_kardex}
-          </h2>
-          <p className="text-sm text-gray-600">
-            Nro Control: {viaje.num_formu}
-          </p>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-start border-b pb-4">
+        <div className="space-y-1">
+          <div className="text-lg font-bold text-blue-700">
+            <p>Cronológico:</p>
+            <p className="font-semibold">{viaje.num_kardex}</p>
+          </div>
+          <p className="text-sm text-gray-600">Nro Control: {viaje.num_formu}</p>
         </div>
 
-        <div className="text-sm text-gray-700 mx-auto">
+        <div className="text-sm text-gray-700">
           <CalendarDays className="inline mr-1 w-4 h-4" />
           Ingreso:{" "}
-          <span className="font-semibold text-gray-800">
-            {viaje.fec_ingreso}
-          </span>
+          <span className="font-semibold text-gray-800">{viaje.fec_ingreso}</span>
         </div>
 
         <div className="text-sm text-gray-700">
           <FileText className="inline mr-1 w-4 h-4" />
           Lugar:{" "}
-          <span className="font-semibold text-gray-800">
-            {viaje.lugar_formu}
-          </span>
+          <span className="font-semibold text-gray-800">{viaje.lugar_formu}</span>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen((v) => !v)}
-          className="ml-auto flex items-center gap-2 rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
-          aria-expanded={isOpen}
-          aria-controls={`viaje-body-${viaje.id_viaje}`}
-        >
-          {isOpen ? 'Ocultar' : 'Mostrar'}
-          <motion.span
-            animate={{ rotate: isOpen ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-            className="inline-flex"
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+            aria-expanded={isOpen}
+            aria-controls={`viaje-body-${viaje.id_viaje}`}
           >
-            <ChevronRight className="w-4 h-4" />
-          </motion.span>
-        </button>
+            {isOpen ? 'Ocultar' : 'Mostrar'}
+            <motion.span
+              animate={{ rotate: isOpen ? 90 : 0 }}
+              transition={{ duration: 0.2 }}
+              className="inline-flex"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </motion.span>
+          </button>
+        </div>
       </div>
 
       {/* Body (collapsible) */}

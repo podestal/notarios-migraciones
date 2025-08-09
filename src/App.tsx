@@ -1,11 +1,12 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ViajeMain from "./components/api/ViajeMain"
 import useGetViajes from "./hooks/useGetViajes"
 import ViajeFilters from "./components/api/ViajeFilters"
 import ViajePaginator from "./components/api/ViajePaginator"
 
 const App = () => {
+
   const access = '1234567890'
   const [kardex, setKardex] = useState('')
   const [name, setName] = useState('')
@@ -13,6 +14,11 @@ const App = () => {
   const presentYear = new Date().getFullYear()
   const [selectedYear, setSelectedYear] = useState(`${presentYear}`)
   const [page, setPage] = useState(1)
+
+
+  useEffect(() => {
+    setPage(1)
+  }, [kardex, interiorExterior, name, selectedYear])
   const { data: viajesPage, isLoading, isError, error, refetch } = useGetViajes({ crono: kardex, tipoPermiso: interiorExterior, nombreParticipante: name, page, access, year:2025 })
 
   // if (isSuccess) 

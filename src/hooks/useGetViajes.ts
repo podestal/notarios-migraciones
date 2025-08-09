@@ -21,7 +21,7 @@ const useGetViajes = ({ crono, tipoPermiso, nombreParticipante, page, access, ye
     console.log(`${year}000000`)
 
     if (crono !== `${year}000000` && crono !== undefined) params = { ...params, crono };
-    if (tipoPermiso) params = { ...params, tipoPermiso };
+    if (tipoPermiso !== '0' && tipoPermiso !== undefined) params = { ...params, tipoPermiso };
     if (nombreParticipante) params = { ...params, nombreParticipante };
 
     return useQuery({
